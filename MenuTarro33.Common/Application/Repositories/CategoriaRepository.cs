@@ -59,8 +59,6 @@ namespace MenuTarro33.Common.Application.Repositories
                 };
             }
         }
-
-       
         public async Task<GenericResponse<TbCategoria>> DeleteAsync(int id)
         {
             try
