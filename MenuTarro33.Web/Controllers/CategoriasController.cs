@@ -14,7 +14,8 @@ namespace MenuTarro33.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+           var ListResponse = await _categoriaRepository.GetAllTblCategoriasAsync();
+            return View(ListResponse.ListResults);
         }
     }
 }
