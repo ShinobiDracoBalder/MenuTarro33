@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace MenuTarro33.Common.Entities
@@ -24,9 +23,10 @@ namespace MenuTarro33.Common.Entities
         [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string VideoPath { get; set; }
-        [ForeignKey("ActivationsForm")]
+        [ForeignKey("TbCategoria")]
         public int CategoriaId { get; set; }
         [JsonIgnore]
         public TbCategoria TbCategoria { get; set; }
+        public ICollection<TbPlatilloImage> TbPlatilloImages { get; set; }
     }
 }

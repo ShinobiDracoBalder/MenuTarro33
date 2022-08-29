@@ -9,6 +9,7 @@ namespace MenuTarro33.Common.DataBase
 
         public DbSet<TbPlatillo> Platillos { get; set; }
         public DbSet<TbCategoria> Categorias { get; set; }
+        public DbSet<TbPlatilloImage> PlatilloImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
