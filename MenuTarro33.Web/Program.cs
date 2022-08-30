@@ -1,7 +1,10 @@
 using MenuTarro33.Common.Application.Repositories;
 using MenuTarro33.Common.DataBase;
 using MenuTarro33.Common.SExplMappers;
+using MenuTarro33.Web.Helpers;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(o =>
 });
 
 builder.Services.AddAutoMapper(typeof(SpExplorationMapper)); ;
-
+builder.Services.AddFlashMessage();
+builder.Services.AddScoped<IImageVideoHelper, ImageVideoHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

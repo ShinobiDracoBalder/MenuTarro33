@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace MenuTarro33.Common.Dtos
@@ -8,10 +9,12 @@ namespace MenuTarro33.Common.Dtos
         public int CategoriaId { get; set; }
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Display(Name = "Nombre Categoría")]
         public string NombreCategoria { get; set; }
         [MaxLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
         [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -27,5 +30,11 @@ namespace MenuTarro33.Common.Dtos
         [Display(Name = "Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime DateLocal => FechaRegistro.ToLocalTime();
+
+        [Display(Name = "Image")]
+        public IFormFile? ImageFile { get; set; }
+
+        [Display(Name = "Video")]
+        public IFormFile? VideoFile { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
-                _applicationDbContext.Categorias.Add(entity);
+                _applicationDbContext.TbCategoria.Add(entity);
                await _applicationDbContext.SaveChangesAsync();
                 return new GenericResponse<TbCategoria>
                 {
@@ -83,7 +83,7 @@ namespace MenuTarro33.Common.Application.Repositories
             try
             {
                 List<TbCategoria> listAll = await _applicationDbContext
-                .Categorias.Where(c => c.Activo == 1)
+                .TbCategoria.Where(c => c.Activo == 1)
                 .ToListAsync();
                
                 return new GenericResponse<TbCategoria> {
@@ -105,7 +105,7 @@ namespace MenuTarro33.Common.Application.Repositories
             try
             {
                 List<TbCategoria> listAll = await _applicationDbContext
-                .Categorias.Where(c => c.Activo == 1)
+                .TbCategoria.Where(c => c.Activo == 1)
                 .ToListAsync();
 
                 var ListDto = new List<CategoriaDto>();
@@ -164,7 +164,7 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
-                _applicationDbContext.Categorias.Update(entity);
+                _applicationDbContext.TbCategoria.Update(entity);
                 await _applicationDbContext.SaveChangesAsync(); 
                 return new GenericResponse<TbCategoria> {
                     IsSuccess = true,

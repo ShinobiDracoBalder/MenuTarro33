@@ -1,0 +1,60 @@
+﻿@model CategoriaDto
+
+@{
+    ViewData["Title"] = "Categoría";
+    Layout = null;
+}
+
+<flash dismissable="true" />
+
+<div class="container smfont">
+    <form asp-action="AddOrEdit" autocomplete="off" asp-route-id="@Model.CategoriaId" onsubmit="return jQueryAjaxPost(this);">
+        @if (Model.CategoriaId> 0)
+        {
+            <input type="hidden" asp-for="ImagePath" />
+            <input type="hidden" asp-for="VideoPath" />
+        }
+        <div class="box-body">
+            
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <span class="required">*</span>
+                        <label asp-for="NombreCategoria" class="control-label"></label>
+                        <input asp-for="NombreCategoria" class="form-control smfont" />
+                        <span asp-validation-for="NombreCategoria" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span class="required">*</span>
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <input asp-for="Descripcion" class="form-control smfont" />
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <input asp-for="ImageFile" class="form-control" type="file" accept="image/png, image/gif, image/jpeg" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VideoFile" class="control-label"></label>
+                        <input asp-for="VideoFile" class="form-control" type="file" accept="video/mp4,video/x-m4v,video/*"/>
+                        <span asp-validation-for="VideoFile" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal"> Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success"> Guardar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
