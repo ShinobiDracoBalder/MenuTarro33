@@ -61,14 +61,14 @@ namespace MenuTarro33.Web.Controllers
                 {
                     var _categoria = _mapper.Map<TbCategoria>(category);
                     GenericResponse<TbCategoria> genericResponse = new();
-
+                    Guid imageId = Guid.Empty;
+                    string path = string.Empty;
+                    string Videopath = string.Empty;
                     if (id == 0) //Insert
                     {
-                        Guid imageId = Guid.Empty;
-                        string path = string.Empty;
-                        string Videopath = string.Empty;
+                        
 
-                        if (category.ImageFile != null || category.VideoFile != null)
+                        if (category.ImageFile != null)
                         {
                             // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                             path = await _imageVideoHelper.UploadImageAsync(category.ImageFile, "ImageCategoria");
@@ -76,10 +76,12 @@ namespace MenuTarro33.Web.Controllers
                         if (category.VideoFile != null)
                         {
                             // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
-                            Videopath = await _imageVideoHelper.UploadImageAsync(category.VideoFile, "VideoCategoria");
+                            Videopath = await _imageVideoHelper.UploadVideoAsync(category.VideoFile, "VideoCategoria");
                         }
                         _categoria.ImagePath = path;
                         _categoria.VideoPath = Videopath;
+                        _categoria.Activo = 1;
+                        _categoria.FechaRegistro = DateTime.Now.ToUniversalTime();
 
 
                         genericResponse = await _categoriaRepository.AddAsync(_categoria);
@@ -91,6 +93,18 @@ namespace MenuTarro33.Web.Controllers
                     }
                     else //Update
                     {
+                        path = _categoria.ImagePath;
+                        Videopath = _categoria.ImagePath;
+                        if (category.ImageFile != null)
+                        {
+                            // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                            path = await _imageVideoHelper.UploadImageAsync(category.ImageFile, "ImageCategoria");
+                        }
+                        if (category.VideoFile != null)
+                        {
+                            // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                            Videopath = await _imageVideoHelper.UploadVideoAsync(category.VideoFile, "VideoCategoria");
+                        }
                         // await _categoryRepository.UpdateDataAsync(category);
                         genericResponse = await _categoriaRepository.UpdateAsync(_categoria);
                         if (!genericResponse.IsSuccess)

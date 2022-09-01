@@ -164,7 +164,23 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
-                _applicationDbContext.TbCategoria.Update(entity);
+                var categoria = await _applicationDbContext
+                    .TbCategoria.FirstOrDefaultAsync(c=> c.CategoriaId == entity.CategoriaId);
+
+                if (categoria == null) 
+                {
+                    return new GenericResponse<TbCategoria>
+                    {
+                        IsSuccess = false,
+                        Message = "No existe un categoria con el mismo nombre."
+                    };
+                }
+                categoria.NombreCategoria = entity.NombreCategoria ?? categoria.NombreCategoria;
+                categoria.Descripcion = entity.Descripcion ?? categoria.Descripcion;
+                categoria.ImagePath = entity.ImagePath ?? categoria.ImagePath;
+                categoria.VideoPath = entity.VideoPath ?? categoria.VideoPath;
+
+                _applicationDbContext.TbCategoria.Update(categoria);
                 await _applicationDbContext.SaveChangesAsync(); 
                 return new GenericResponse<TbCategoria> {
                     IsSuccess = true,

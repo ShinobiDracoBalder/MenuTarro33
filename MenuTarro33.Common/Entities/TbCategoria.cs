@@ -20,5 +20,12 @@ namespace MenuTarro33.Common.Entities
        
         public DateTime DateLocal => FechaRegistro.ToLocalTime();
         public ICollection<TbPlatillo> TbPlatillos { get; set; }
+        public string PictureFullPath => ImagePath == string.Empty
+          ? $"http://localhost:5264/Images/noimage.png"
+          : string.Format("http://localhost:5264/{0}", ImagePath.Substring(1));
+        public string VideoFullPath => VideoPath == string.Empty
+                  ? $"http://localhost:5264/Images/noimage.png"
+                  : string.Format("http://localhost:5264/{0}", VideoPath.Substring(1));
+
     }
 }
