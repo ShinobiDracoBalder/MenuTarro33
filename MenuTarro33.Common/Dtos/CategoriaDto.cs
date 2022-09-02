@@ -11,7 +11,7 @@ namespace MenuTarro33.Common.Dtos
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Display(Name = "Nombre Categoría")]
         public string NombreCategoria { get; set; }
-        [MaxLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
+        [MaxLength(550, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]

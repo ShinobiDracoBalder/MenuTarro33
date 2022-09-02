@@ -15,10 +15,11 @@
             <input type="hidden" asp-for="VideoPath" />
             <input type="hidden" asp-for="CategoriaId" />
         }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="box-body">
            
             <div class="row">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
                 <div class="col-md-6">
                     <div class="form-group">
                         <span class="required">*</span>
@@ -29,7 +30,7 @@
                     <div class="form-group">
                         <span class="required">*</span>
                         <label asp-for="Descripcion" class="control-label"></label>
-                        <input asp-for="Descripcion" class="form-control smfont" />
+                        <textarea asp-for="Descripcion" class="form-control smfont" maxlength="535"></textarea>
                         <span asp-validation-for="Descripcion" class="text-danger"></span>
                     </div>
                 </div>

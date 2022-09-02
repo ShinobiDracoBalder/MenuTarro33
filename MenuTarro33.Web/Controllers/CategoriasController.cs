@@ -4,11 +4,13 @@ using MenuTarro33.Common.Application.Repositories;
 using MenuTarro33.Common.Dtos;
 using MenuTarro33.Common.Entities;
 using MenuTarro33.Common.Responses;
+using MenuTarro33.Common.Utilities;
 using MenuTarro33.Web.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vereyon.Web;
+using static MenuTarro33.Web.Helpers.ModalHelper;
 
 namespace MenuTarro33.Web.Controllers
 {
@@ -18,20 +20,39 @@ namespace MenuTarro33.Web.Controllers
         private readonly IFlashMessage _flashMessage;
         private readonly IMapper _mapper;
         private readonly IImageVideoHelper _imageVideoHelper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoriasController(ICategoriaRepository categoriaRepository, IFlashMessage flashMessage, IMapper mapper, IImageVideoHelper imageVideoHelper)
+        public CategoriasController(ICategoriaRepository categoriaRepository, IFlashMessage flashMessage, IMapper mapper, IImageVideoHelper imageVideoHelper, IWebHostEnvironment webHostEnvironment)
         {
             _categoriaRepository = categoriaRepository;
             _flashMessage = flashMessage;
             _mapper = mapper;
             _imageVideoHelper = imageVideoHelper;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {
            var ListResponse = await _categoriaRepository.GetAllTblCategoriasAsync();
             return View(ListResponse.ListResults);
         }
-        //[NoDirectAccess]
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var categoriaDto = await _categoriaRepository.GetOnlyTblCategoriaAsync(id.Value);
+
+            if (!categoriaDto.IsSuccess)
+            {
+                return NotFound();
+            }
+
+            return View(categoriaDto.Result);
+        }
+        [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
             if (id == 0)
@@ -50,6 +71,8 @@ namespace MenuTarro33.Web.Controllers
                 return View(category);
             }
         }
+
+       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,7 +117,7 @@ namespace MenuTarro33.Web.Controllers
                     else //Update
                     {
                         path = _categoria.ImagePath;
-                        Videopath = _categoria.ImagePath;
+                        Videopath = _categoria.VideoPath;
                         if (category.ImageFile != null)
                         {
                             // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
@@ -105,6 +128,8 @@ namespace MenuTarro33.Web.Controllers
                             // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                             Videopath = await _imageVideoHelper.UploadVideoAsync(category.VideoFile, "VideoCategoria");
                         }
+                        _categoria.ImagePath = path;
+                        _categoria.VideoPath = Videopath;    
                         // await _categoryRepository.UpdateDataAsync(category);
                         genericResponse = await _categoriaRepository.UpdateAsync(_categoria);
                         if (!genericResponse.IsSuccess)
@@ -138,41 +163,49 @@ namespace MenuTarro33.Web.Controllers
 
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddOrEdit", category) });
         }
-        
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int? Id)
-        //{
-        //    if (Id == null || Id == 0)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var producto = await _productoRepo.ObtenerPrimeroAsync(p => p.ProductoId == Id, incluirPropiedades: "Categoria,TipoAplicacion");
-        //    if (!producto.IsSuccess)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? Id)
+        {
+            if (Id == null || Id == 0)
+            {
+                return NotFound();
+            }
 
-        //    // Eliminar la imagen
-        //    string upload = _webHostEnvironment.WebRootPath + WC.ImagenRuta;
+            var categoria = await _categoriaRepository.GetByIdAsync(Id.Value);
+            if (!categoria.IsSuccess)
+            {
+                return NotFound();
+            }
 
-        //    // borrar la imagen anterior
-        //    var anteriorFile = Path.Combine(upload, producto.Result.ImagenUrl);
-        //    if (System.IO.File.Exists(anteriorFile))
-        //    {
-        //        System.IO.File.Delete(anteriorFile);
-        //    }
-        //    // fin Borrar imagen anterior
+            // Eliminar la imagen
+            string upload = _webHostEnvironment.WebRootPath + WC.ImagenRuta;
+            string uploadVideo = _webHostEnvironment.WebRootPath + WC.VideoRuta;
 
-        //    var Result = await _productoRepo.RemoverAsync(producto.Result);
-        //    if (!Result.IsSuccess)
-        //    {
-        //        TempData[WC.Error] = $"Error al pocesar esta Transaccion  {Result.Message}";
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    TempData[WC.Exitosa] = "Producto eliminado Exitosamente!";
-        //    return RedirectToAction(nameof(Index));
+            // borrar la imagen anterior
+            var anteriorFile = Path.Combine(upload, categoria.Result.ImagePath);
+            if (System.IO.File.Exists(anteriorFile))
+            {
+                System.IO.File.Delete(anteriorFile);
+            }
+            // fin Borrar imagen anterior
+            // borrar la video anterior
+            var anteriorFileVideo = Path.Combine(upload, categoria.Result.ImagePath);
+            if (System.IO.File.Exists(anteriorFileVideo))
+            {
+                System.IO.File.Delete(anteriorFileVideo);
+            }
+            // fin Borrar video anterior
 
-        //}
+            var Result = await _categoriaRepository.DeleteAsync(categoria.Result.CategoriaId);
+            if (!Result.IsSuccess)
+            {
+                TempData[WC.Error] = $"Error al pocesar esta Transaccion  {Result.Message}";
+                return RedirectToAction(nameof(Index));
+            }
+            TempData[WC.Exitosa] = "Producto eliminado Exitosamente!";
+            return RedirectToAction(nameof(Index));
+
+        }
     }
 }

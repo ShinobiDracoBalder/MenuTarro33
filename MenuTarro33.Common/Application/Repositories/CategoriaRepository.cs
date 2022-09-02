@@ -150,9 +150,38 @@ namespace MenuTarro33.Common.Application.Repositories
             }
         }
 
-        public Task<GenericResponse<CategoriaDto>> GetOnlyTblCategoriaAsync(int id)
+        public async Task<GenericResponse<CategoriaDto>> GetOnlyTblCategoriaAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categoria = await _applicationDbContext
+                    .TbCategoria.FirstOrDefaultAsync(c => c.CategoriaId.Equals(id));
+
+                if (categoria == null)
+                {
+                    return new GenericResponse<CategoriaDto>
+                    {
+                        IsSuccess = false,
+                        Message ="No Data!",
+                    };
+                }
+
+                var categoriaDto = _mapper.Map<CategoriaDto>(categoria);
+
+                return new GenericResponse<CategoriaDto>
+                {
+                    IsSuccess = true,
+                    Result= categoriaDto,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new GenericResponse<CategoriaDto>
+                {
+                    IsSuccess = false,
+                    Message = exception.InnerException.Message
+                };
+            }
         }
 
         public async Task<bool> SaveAllAsync()

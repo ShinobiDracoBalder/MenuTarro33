@@ -28,7 +28,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NombreCategoria)
+                    <a asp-action="Details" asp-controller="Categorias" asp-route-Id="@item.CategoriaId">@Html.DisplayFor(modelItem => item.NombreCategoria)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
@@ -40,7 +40,8 @@
                     </div>
                 </td>
                 <td>
-                    <div class="video-frame">
+                    <div class="title">@item.NombreCategoria</div>
+                    <div class="video-frame" >
                         <video style="width:120px; height:70px;" controls>
                             <source src="@Url.Content(@item.VideoFullPath)" type="video/mp4" />
                         </video>
