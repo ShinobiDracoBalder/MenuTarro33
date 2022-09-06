@@ -15,6 +15,13 @@ html {
 
 body {
     margin-bottom: 60px;
+    background-image: url("/Images/image_2022_09_06T21_14_48_845Z.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    /*background-color: #FF6600;
+    width: 100%;
+    height: auto;*/
 }
 
 @charset "utf-8";

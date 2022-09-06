@@ -5,6 +5,7 @@ using MenuTarro33.Common.Dtos;
 using MenuTarro33.Common.Entities;
 using MenuTarro33.Common.Responses;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace MenuTarro33.Common.Application.Repositories
 {
@@ -74,7 +75,7 @@ namespace MenuTarro33.Common.Application.Repositories
             try
             {
                 List<TbPlatillo> listAll = await _applicationDbContext
-                .TbPlatillo.Where(c => c.Activo == 1)
+                .TbPlatillo.Include(x => x.TbCategoria).Where(c => c.Activo == 1)
                 .ToListAsync();
 
                 var ListDto = new List<PlatilloDto>();
@@ -100,9 +101,35 @@ namespace MenuTarro33.Common.Application.Repositories
             }
         }
 
-        public Task<GenericResponse<TbPlatillo>> GetByIdAsync(int id)
+        public async Task<GenericResponse<TbPlatillo>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _applicationDbContext.TbPlatillo.FirstOrDefaultAsync(p => p.PlatilloId == id);
+
+                if (response == null)
+                {
+                    return new GenericResponse<TbPlatillo>()
+                    {
+                        IsSuccess = false,
+                        Message = "Not data",
+                    };
+                }
+
+                return new GenericResponse<TbPlatillo>()
+                {
+                    IsSuccess = true,
+                    Result = response,
+                };
+
+            }
+            catch (Exception exception)
+            {
+                return new GenericResponse<TbPlatillo>(){
+                    IsSuccess = false,
+                    Message= exception.InnerException.Message,   
+                };
+            }
         }
 
         public Task<GenericResponse<PlatilloDto>> GetOnlyTblPlatilloAsync(int id)

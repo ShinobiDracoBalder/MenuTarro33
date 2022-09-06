@@ -1,7 +1,8 @@
-﻿@{
+﻿@model IEnumerable<CategoriaDto>
+@{
     ViewData["Title"] = "Home Page";
 }
-<style>
+@*<style>
     .divHome {
         width: 100%;
         height: 400px;
@@ -9,14 +10,128 @@
         background-repeat: no-repeat;
         background-size: contain;
         border: 1px solid red;
+        align-items : center;
     }
-</style>
-@*<div style="width: 1900px">
-    <img src="~/images/tarro33-welcometext.png">
-</div>*@
+</style>*@
+<div class="divHome">
+    @if (Model.Count() > 0)
+    {
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-indicators">
+                @for (int i = 0; i < Model.ToList().Count(); i++)
+                {
+                    @if (i == 0)
+                    {
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    }
+                    else
+                    {
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" aria-label="Slide 2"></button>
+                    }
+                }
+            </div>
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.ToList().Count(); i++)
+                {
+                    var PictureFullPath = Model.ToList()[i].PictureFullPath;
+                    var NombreCategoria = Model.ToList()[i].NombreCategoria;
+                    var Descripcion = Model.ToList()[i].Descripcion;
+                    @if (i == 0)
+                    {
+                        <div class="carousel-item active">
+                            <img src="@PictureFullPath" class="d-block w-100" alt="@NombreCategoria" style="width: 2750px;height: 450px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>@NombreCategoria</h5>
+                                
+                                    <blockquote class="blockquote">
+                                        <p>@Descripcion</p>
+                                    </blockquote>
+                                
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <img src="@PictureFullPath" class="d-block w-100" alt="@NombreCategoria" style="width: 2750px;height: 450px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>@NombreCategoria</h5>
+                                
+                                    <blockquote class="blockquote">
+                                        <p>@Descripcion</p>
+                                    </blockquote>
+                                
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    }
+    else
+    {
+        <p>No hay registros</p>
+    }
+    
+</div>
 <div class="text-center">
-    @*<img src="~/images/tarro33-welcometext.png">*@
+    <a  asp-area="" asp-controller="Categorias" asp-action="Index">
+        <img src="~/images/tarro-logo-top.png" style="width:550px; height:550px; border-radius:50px" />
+    </a>
+</div>
+@*<div class="text-center">
+    <img src="~/images/tarro33-welcometext.png">
     <img src="~/images/tarro-logo-top.png" style="width:550px; height:550px; border-radius:50px" />
 </div>
-<div id="image" role="img" aria-label="Textual Description"></div>
+<div id="image" role="img" aria-label="Textual Description"></div>*@
+
+@*<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    
+    <div class="carousel-inner">
+        @for (int i = 0; i < Model.ToList().Count(); i++){
+            var PictureFullPath = Model.ToList()[i].PictureFullPath;
+            var NombreCategoria = Model.ToList()[i].NombreCategoria;
+            if (i == 0)
+            {
+                <div class="carousel-item active">
+                    <img src="@PictureFullPath" class="d-block w-100" alt="@NombreCategoria" style="width:50px;">
+                </div>
+            }
+            else
+            {
+                <div class="carousel-item">
+                    <img src="@PictureFullPath" class="d-block w-100" alt="@NombreCategoria" style="width:50px;">
+                </div>
+            }
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>*@
+
+@*<div id="image" role="img" aria-label="Textual Description"></div>*@
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.carousel').carousel();
+        });
+    </script>
+
+}
 

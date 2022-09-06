@@ -24,6 +24,7 @@ builder.Services.AddAutoMapper(typeof(SpExplorationMapper)); ;
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IImageVideoHelper, ImageVideoHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
+builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
