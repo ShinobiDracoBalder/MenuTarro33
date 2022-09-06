@@ -23,7 +23,7 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
-                _applicationDbContext.Platillos.Add(entity);
+                _applicationDbContext.TbPlatillo.Add(entity);
                 await _applicationDbContext.SaveChangesAsync();
                 return new GenericResponse<TbPlatillo>
                 {
@@ -74,7 +74,7 @@ namespace MenuTarro33.Common.Application.Repositories
             try
             {
                 List<TbPlatillo> listAll = await _applicationDbContext
-                .Platillos.Where(c => c.Activo == 1)
+                .TbPlatillo.Where(c => c.Activo == 1)
                 .ToListAsync();
 
                 var ListDto = new List<PlatilloDto>();
@@ -119,7 +119,7 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
-                _applicationDbContext.Platillos.Update(entity);
+                _applicationDbContext.TbPlatillo.Update(entity);
                 await _applicationDbContext.SaveChangesAsync();
                 return new GenericResponse<TbPlatillo>
                 {

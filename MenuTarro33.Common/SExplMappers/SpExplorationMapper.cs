@@ -9,6 +9,7 @@ namespace MenuTarro33.Common.SExplMappers
         public SpExplorationMapper()
         {
             CreateMap<TbCategoria, CategoriaDto>().ReverseMap();
+            CreateMap<TbPlatillo, PlatilloDto>().ReverseMap();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MenuTarro33.Common.Application.Repositories
         public static void AddApplication(this IServiceCollection service)
         {
             service.AddTransient<ICategoriaRepository, CategoriaRepository>();
+            service.AddTransient<IPlatilloRepository, PlatilloRepository>();
         }
     }
 }

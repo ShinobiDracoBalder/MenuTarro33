@@ -1,0 +1,40 @@
+﻿@model PlatilloViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <span class="required text-danger">*</span>
+            <label asp-for="NombrePlatillo" class="control-label"></label>
+            <input asp-for="NombrePlatillo" class="form-control" />
+            <span asp-validation-for="NombrePlatillo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <span class="required text-danger">*</span>
+            <label asp-for="Descripcion" class="control-label"></label>
+            <textarea asp-for="Descripcion" class="form-control"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <span class="required text-danger">*</span>
+            <label asp-for="CategoriaId" class="control-label"></label>
+            <select asp-for="CategoriaId" asp-items="Model.Categories" class="form-control"></select>
+            <span asp-validation-for="CategoriaId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <span class="required text-danger">*</span>
+            <label asp-for="Precio" class="control-label"></label>
+            <input asp-for="Precio" class="form-control" />
+            <span asp-validation-for="Precio" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageFile" class="control-label"></label>
+            <input asp-for="ImageFile" class="form-control" type="file" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+    </div>
+</div>

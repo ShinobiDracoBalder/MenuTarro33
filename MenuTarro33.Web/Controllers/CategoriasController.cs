@@ -72,8 +72,6 @@ namespace MenuTarro33.Web.Controllers
             }
         }
 
-       
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, CategoriaDto category)
@@ -89,7 +87,6 @@ namespace MenuTarro33.Web.Controllers
                     string Videopath = string.Empty;
                     if (id == 0) //Insert
                     {
-                        
 
                         if (category.ImageFile != null)
                         {
@@ -190,7 +187,7 @@ namespace MenuTarro33.Web.Controllers
             }
             // fin Borrar imagen anterior
             // borrar la video anterior
-            var anteriorFileVideo = Path.Combine(upload, categoria.Result.ImagePath);
+            var anteriorFileVideo = Path.Combine(upload, categoria.Result.VideoPath);
             if (System.IO.File.Exists(anteriorFileVideo))
             {
                 System.IO.File.Delete(anteriorFileVideo);

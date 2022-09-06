@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
@@ -7,19 +8,22 @@ namespace MenuTarro33.Common.Dtos
     public class CategoriaDto
     {
         public int CategoriaId { get; set; }
+
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Display(Name = "Nombre Categoría")]
         public string NombreCategoria { get; set; }
-        [MaxLength(550, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
+        
+        [MaxLength(1550, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
-        [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
+        
+        [MaxLength(1500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string ImagePath { get; set; }
-        [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
+        [MaxLength(1500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string VideoPath { get; set; }
         public int Activo { get; set; } = 1;

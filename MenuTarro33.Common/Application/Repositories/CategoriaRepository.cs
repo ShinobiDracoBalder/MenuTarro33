@@ -135,9 +135,22 @@ namespace MenuTarro33.Common.Application.Repositories
         {
             try
             {
+                var categoria = await _applicationDbContext
+                    .TbCategoria.FirstOrDefaultAsync(c => c.CategoriaId == id);
+
+                if (categoria ==null)
+                {
+                    return new GenericResponse<TbCategoria>
+                    {
+                        IsSuccess = false,
+                        Message = "No Data!"
+                    };
+                }
+
                 return new GenericResponse<TbCategoria>
                 {
                     IsSuccess = true,
+                    Result = categoria,
                 };
             }
             catch (Exception exception)

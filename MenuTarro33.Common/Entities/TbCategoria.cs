@@ -24,7 +24,7 @@ namespace MenuTarro33.Common.Entities
           ? $"http://localhost:5264/Images/noimage.png"
           : string.Format("http://localhost:5264/{0}", ImagePath.Substring(1));
         public string VideoFullPath => VideoPath == string.Empty
-                  ? $"http://localhost:5264/Images/noimage.png"
+                  ? null/*$"http://localhost:5264/Images/noimage.png"*/
                   : string.Format("http://localhost:5264/{0}", VideoPath.Substring(1));
 
     }

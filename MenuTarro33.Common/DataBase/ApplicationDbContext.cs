@@ -7,7 +7,7 @@ namespace MenuTarro33.Common.DataBase
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<TbPlatillo> Platillos { get; set; }
+        public DbSet<TbPlatillo> TbPlatillo { get; set; }
         public DbSet<TbCategoria> TbCategoria { get; set; }
         public DbSet<TbPlatilloImage> PlatilloImages { get; set; }
 
