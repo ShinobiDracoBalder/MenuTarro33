@@ -1,6 +1,7 @@
 ﻿using MenuTarro33.Common.Application.Interfaces;
 using MenuTarro33.Common.Application.Repositories;
 using MenuTarro33.Common.Dtos;
+using MenuTarro33.Common.Entities;
 using MenuTarro33.Common.Utilities;
 using MenuTarro33.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ namespace MenuTarro33.Web.Controllers
 
             var ListResult = await _platilloRepository.GetAllTblPlatilloAsync(id.Value);
 
-            IQueryable<PlatilloDto> query = ListResult.SpecialResults;
+            IQueryable<TbPlatillo> query = ListResult.SpecialResults;
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -89,7 +90,7 @@ namespace MenuTarro33.Web.Controllers
             int pageSize = 8;
             HomeViewModel model = new()
             {
-                 Platillos = await PaginatedList<PlatilloDto>.CreateAsync(query, pageNumber ?? 1, pageSize),
+                 Platillos = await PaginatedList<TbPlatillo>.CreateAsync(query, pageNumber ?? 1, pageSize),
             };
             return View(model);
         }

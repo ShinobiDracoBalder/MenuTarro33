@@ -70,31 +70,29 @@ namespace MenuTarro33.Common.Application.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<GenericResponse<PlatilloDto>> GetAllTblPlatilloAsync(int id)
+        public async Task<GenericResponse<TbPlatillo>> GetAllTblPlatilloAsync(int id)
         {
             try
             {
-                List<TbPlatillo> listAll = await _applicationDbContext
-                .TbPlatillo.Include(x => x.TbCategoria).Where(c => c.Activo == 1 && c.CategoriaId == id)
-                .ToListAsync();
+                IQueryable<TbPlatillo> listAll =  _applicationDbContext
+                .TbPlatillo.Include(x => x.TbCategoria).Where(c => c.Activo == 1 && c.CategoriaId == id);
 
-                List<PlatilloDto> ListDto = new List<PlatilloDto>();
+                //List<PlatilloDto> ListDto = new List<PlatilloDto>();
 
-                foreach (var list in listAll)
-                {
-                    ListDto.Add(_mapper.Map<PlatilloDto>(list));
-                }
-                IQueryable<PlatilloDto> Listquery = ListDto.AsQueryable();
-                return new GenericResponse<PlatilloDto>
+                //foreach (var list in listAll)
+                //{
+                //    ListDto.Add(_mapper.Map<PlatilloDto>(list));
+                //}
+                //IQueryable<PlatilloDto> Listquery = ListDto.AsQueryable();
+                return new GenericResponse<TbPlatillo>
                 {
                     IsSuccess = true,
-                    ListResults = ListDto,
-                    SpecialResults = Listquery,
+                    SpecialResults = listAll,
                 };
             }
             catch (Exception exception)
             {
-                return new GenericResponse<PlatilloDto>
+                return new GenericResponse<TbPlatillo>
                 {
                     IsSuccess = false,
                     Message = exception.InnerException.Message
