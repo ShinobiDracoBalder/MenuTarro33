@@ -70,6 +70,38 @@ namespace MenuTarro33.Common.Application.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<GenericResponse<PlatilloDto>> GetAllTblPlatilloAsync(int id)
+        {
+            try
+            {
+                List<TbPlatillo> listAll = await _applicationDbContext
+                .TbPlatillo.Include(x => x.TbCategoria).Where(c => c.Activo == 1 && c.CategoriaId == id)
+                .ToListAsync();
+
+                List<PlatilloDto> ListDto = new List<PlatilloDto>();
+
+                foreach (var list in listAll)
+                {
+                    ListDto.Add(_mapper.Map<PlatilloDto>(list));
+                }
+                IQueryable<PlatilloDto> Listquery = ListDto.AsQueryable();
+                return new GenericResponse<PlatilloDto>
+                {
+                    IsSuccess = true,
+                    ListResults = ListDto,
+                    SpecialResults = Listquery,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new GenericResponse<PlatilloDto>
+                {
+                    IsSuccess = false,
+                    Message = exception.InnerException.Message
+                };
+            }
+        }
+
         public async Task<GenericResponse<PlatilloDto>> GetAllTblPlatillosAsync()
         {
             try

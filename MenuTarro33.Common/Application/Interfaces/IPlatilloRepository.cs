@@ -8,5 +8,7 @@ namespace MenuTarro33.Common.Application.Interfaces
     {
         Task<GenericResponse<PlatilloDto>> GetAllTblPlatillosAsync();
         Task<GenericResponse<PlatilloDto>> GetOnlyTblPlatilloAsync(int id);
+
+        Task<GenericResponse<PlatilloDto>> GetAllTblPlatilloAsync(int id);
     }
 }

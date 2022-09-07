@@ -244,3 +244,33 @@ body {
         z-index: 1;
         content: ""
     }
+div.a {
+    text-align: center;
+}
+
+div.b {
+    text-align: left;
+}
+
+div.c {
+    text-align: right;
+}
+
+div.d {
+    text-align: justify;
+}
+
+#main {
+    width: 220px;
+    height: 300px;
+    border: 1px solid black;
+    display: flex;
+    align-items: baseline;
+}
+
+    #main div {
+        flex: 1;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+    }
