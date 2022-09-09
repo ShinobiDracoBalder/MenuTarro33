@@ -162,6 +162,12 @@ namespace MenuTarro33.Common.Application.Repositories
             }
         }
 
+        public IQueryable<TbPlatillo> GetFullAsync(int id)
+        {
+          return  _applicationDbContext.TbPlatillo
+                .Include(c => c.TbCategoria).Where(p => p.CategoriaId == id);
+        }
+
         public Task<GenericResponse<PlatilloDto>> GetOnlyTblPlatilloAsync(int id)
         {
             throw new NotImplementedException();

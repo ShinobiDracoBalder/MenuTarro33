@@ -63,9 +63,8 @@ namespace MenuTarro33.Web.Controllers
             }
             ViewData["CurrentFilter"] = searchString;
 
-            var ListResult = await _platilloRepository.GetAllTblPlatilloAsync(id.Value);
-
-            IQueryable<TbPlatillo> query = ListResult.SpecialResults;
+            IQueryable<TbPlatillo> query = _platilloRepository.GetFullAsync(id.Value);
+;
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -87,7 +86,7 @@ namespace MenuTarro33.Web.Controllers
                     query = query.OrderBy(p => p.NombrePlatillo);
                     break;
             }
-            int pageSize = 8;
+            int pageSize = 8; 
             HomeViewModel model = new()
             {
                  Platillos = await PaginatedList<TbPlatillo>.CreateAsync(query, pageNumber ?? 1, pageSize),

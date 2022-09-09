@@ -21,11 +21,11 @@ namespace MenuTarro33.Common.Entities
         public DateTime DateLocal => FechaRegistro.ToLocalTime();
         public ICollection<TbPlatillo> TbPlatillos { get; set; }
         public string PictureFullPath => ImagePath == string.Empty
-          ? $"http://localhost:5264/Images/noimage.png"
-          : string.Format("http://localhost:5264/{0}", ImagePath.Substring(1));
+          ? $"http://menutarro33.comtecom.com.mx/Images/noimage.png"
+          : string.Format("http://menutarro33.comtecom.com.mx/{0}", ImagePath.Substring(1));
         public string VideoFullPath => VideoPath == string.Empty
-                  ? null/*$"http://localhost:5264/Images/noimage.png"*/
-                  : string.Format("http://localhost:5264/{0}", VideoPath.Substring(1));
+                  ? null/*$"http://menutarro33.comtecom.com.mx/Images/noimage.png"*/
+                  : string.Format("http://menutarro33.comtecom.com.mx/{0}", VideoPath.Substring(1));
 
     }
 }
